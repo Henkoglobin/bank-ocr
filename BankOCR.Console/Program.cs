@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BankOCR.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using System.IO;
-using BankOCR.Abstractions;
 
 namespace BankOCR.Console {
     /// <summary>
@@ -15,20 +15,16 @@ namespace BankOCR.Console {
         /// represents a digit. Digits are separated by spaces, while whole numbers are separated
         /// by whole lines.
         /// </summary>
-        /// <param name="file"></param>
-        static void Main(FileInfo file) {
-            if (file == null) {
-                System.Console.WriteLine($"--{nameof(file)} must be specified.");
-                return;
-            }
-
+        /// <param name="argument">Specifies the file to read the ASCII characters from.</param>
+        static int Main(FileInfo argument = null) {
             var serviceCollection = new ServiceCollection();
 
             ConfigureServices(serviceCollection);
 
-            serviceCollection.BuildServiceProvider()
+            return serviceCollection
+                .BuildServiceProvider()
                 .GetRequiredService<Application>()
-                .Run(file);
+                .Run(argument);
         }
 
         /// <summary>
@@ -37,11 +33,12 @@ namespace BankOCR.Console {
         /// <param name="serviceCollection">
         /// The <see cref="ServiceCollection"/> to register all services with.
         /// </param>
-        private static void ConfigureServices(ServiceCollection serviceCollection)
+        private static void ConfigureServices(IServiceCollection serviceCollection)
             => serviceCollection
                 .AddTransient<IDigitSeparator, DigitSeparator>()
                 .AddTransient<IDigitScanner, DigitScanner>()
                 .AddTransient<IBankOcrScanner, BankOcrScanner>()
-                .AddSingleton<Application>();
+                .AddSingleton<Application>()
+            ;
     }
 }

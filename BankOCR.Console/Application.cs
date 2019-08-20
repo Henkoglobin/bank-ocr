@@ -17,15 +17,26 @@ namespace BankOCR.Console {
             this.scanner = scanner;
         }
 
-        public void Run(FileInfo file) {
-            using var reader = new StreamReader(file.OpenRead());
+        internal int Run(FileInfo fileInfo) {
+            if (fileInfo == null) {
+                RunImpl(System.Console.In);
+            } else {
+                using var reader = new StreamReader(fileInfo.OpenRead());
+                RunImpl(reader);
+            }
+         
+            return 0;
+        }
 
-            var fileContents = reader.ReadToEnd();
-            var lines = scanner.Scan(fileContents);
+        private void RunImpl(TextReader reader) {
+            var input = reader.ReadToEnd();
+            var lines = scanner.Scan(input);
 
             foreach (var line in lines) {
                 System.Console.WriteLine(line);
             }
+
+            reader.Dispose();
         }
     }
 }
