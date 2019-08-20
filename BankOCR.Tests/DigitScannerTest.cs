@@ -19,5 +19,12 @@ namespace BankOCR.Tests {
         [InlineData(" _ I_I _I", '9')]
         public void Parse_ScansDigitCorrectly(string value, char expected)
             => scanner.Parse(value).Should().Be(expected);
+
+        [Theory]
+        [InlineData("         ")]
+        [InlineData("_________")]
+        [InlineData("     O  O")]
+        public void Parse_HandlesInvalidDigitsGracefully(string value)
+            => scanner.Parse(value).Should().BeNull();
     }
 }

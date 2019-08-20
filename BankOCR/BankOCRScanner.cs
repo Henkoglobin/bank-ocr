@@ -18,12 +18,15 @@ namespace BankOCR {
             => digitSeparator.GetDigitsByLine(input)
                 // Transform each line by...
                 .Select(
-                    line => line
-                        // ... parsing every digit of the line...
-                        .Select(digit => digitScanner.Parse(digit))
-                        // ... and then collecting all digits of a line into a string
-                        .JoinToString()
-                )
+                    line => {
+                        // Parsing every 3x3 chunk into digits
+                        var digitsInLine = line.Select(digit => digitScanner.Parse(digit)).ToList();
+
+                        // If all digits are valid, concatenate them into a string, otherwise => null
+                        return digitsInLine.All(digit => digit != null) 
+                            ? digitsInLine.Cast<char>().JoinToString() 
+                            : null;
+                    })
                 .ToList();
     }
 }

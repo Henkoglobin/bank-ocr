@@ -60,7 +60,9 @@ namespace BankOCR {
         };
 
         /// <inheritdoc />
-        public char Parse(string input)
-            => patterns[input];
+        public char? Parse(string input)
+            => patterns.TryGetValue(input, out var digit)
+                ? (char?)digit
+                : null;
     }
 }

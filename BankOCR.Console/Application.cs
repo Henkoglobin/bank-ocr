@@ -33,7 +33,7 @@ namespace BankOCR.Console {
             var lines = scanner.Scan(input);
 
             foreach (var line in lines) {
-                System.Console.WriteLine(line);
+                System.Console.WriteLine(line ?? "Error in data");
             }
 
             reader.Dispose();

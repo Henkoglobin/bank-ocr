@@ -2,6 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>HenrikIlgen.BankOCR</PackageId>
+    <Authors>Henrik Ilgen</Authors>
+    <Company />
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/Henkoglobin/bank-ocr</PackageProjectUrl>
+    <Description>Parses strings of 3x3 clusters of characters into numbers</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\RussianPeasantMultiplication\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

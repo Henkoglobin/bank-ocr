@@ -5,6 +5,6 @@
         /// </summary>
         /// <param name="input">A string of exactly nine characters.</param>
         /// <returns>The single digit that is represented by the 9-character flattened input cluster.</returns>
-        char Parse(string input);
+        char? Parse(string input);
     }
 }
